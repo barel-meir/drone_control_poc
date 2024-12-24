@@ -33,10 +33,13 @@ dependencies:
   flutter_map: ^7.0.2  # For integrating Leaflet
   video_player: ^2.9.2 # For video streaming
   flutter_ffmpeg: ^0.4.0 # For H.265 decoding (optional)
+  flutter_vlc_player: ^7.4.2
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
@@ -61,8 +64,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - /home/barel/repos/work/GOPR4724.MP4
+    - /home/barel/repos/work/h265_video.mp4
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

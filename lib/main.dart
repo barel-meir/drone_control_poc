@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'map.dart';  
-import 'video.dart';
+import 'map/map.dart';  
+import 'video/video_vlc_example.dart';
+import 'video/video_gpt.dart';
 
 void main() {
   runApp(DroneControlPOC());

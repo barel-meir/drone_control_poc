@@ -11,6 +11,8 @@ class _VideoStreamWidgetState extends State<VideoStreamWidget> {
   late final Player _player;
   late final VideoController _controller;
 
+  final TextEditingController _uriController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -20,33 +22,74 @@ class _VideoStreamWidgetState extends State<VideoStreamWidget> {
 
     // Set up the video controller
     _controller = VideoController(_player);
-
-    // Load the video (local file or stream URL)
-    _player.open(
-      Media('https://media.w3.org/2010/05/sintel/trailer.mp4'), // Update with your file path or URL
-    );
   }
 
   @override
   void dispose() {
-    // _controller.; // Detach the controller instead of disposing it
-    _player.dispose(); // Dispose the player
+    // _controller.detach();
+    _player.dispose();
+    _uriController.dispose();
     super.dispose();
+  }
+
+  void _playStream() {
+    final uri = _uriController.text.trim();
+    if (uri.isNotEmpty) {
+      _player.open(
+        Media(uri),
+        play: true,
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please enter a valid URI')),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Video Stream'),
+        title: Text('Video Stream Player'),
       ),
-      body: Center(
-        child: Video(
-          controller: _controller,
-          width: double.infinity,
-          height: double.infinity,
-          fit: BoxFit.contain,
-        ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: TextField(
+                    controller: _uriController,
+                    decoration: InputDecoration(
+                      labelText: 'Stream URI',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  flex: 1,
+                  child: ElevatedButton(
+                    onPressed: _playStream,
+                    child: Text('Play'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Center(
+              child: Video(
+                controller: _controller,
+                width: double.infinity,
+                height: double.infinity,
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

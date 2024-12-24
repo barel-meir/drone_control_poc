@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'map/map.dart';  
-import 'video/video_vlc_example.dart';
-import 'video/video_gpt.dart';
+import 'video/video_mediakit.dart';
+import 'package:media_kit/media_kit.dart';
 
-void main() {
+void main() async {
+    // Ensure MediaKit is initialized
+  MediaKit.ensureInitialized();
+
   runApp(DroneControlPOC());
 }
 

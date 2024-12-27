@@ -7,8 +7,11 @@ class VideoStreamWidget extends StatefulWidget {
 }
 
 class _VideoStreamWidgetState extends State<VideoStreamWidget> {
-  late VlcPlayerController _videoPlayerController;
-  final String _videoUrl = '/home/barel/repos/work/GOPR4724.MP4'; // Update the path as needed
+  final String _videoUrl = 'rtsp://127.0.0.1:8554/stream'; // Update the path as needed
+  VlcPlayerController _videoPlayerController = VlcPlayerController.network(
+      'rtsp://127.0.0.1:8554/stream',
+      autoPlay: true);
+
   bool _isError = false;
 
   @override

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
@@ -10,6 +12,8 @@ class VideoStreamWidget extends StatefulWidget {
 class _VideoStreamWidgetState extends State<VideoStreamWidget> {
   late final Player _player;
   late final VideoController _controller;
+  late final NativePlayer native;
+
 
   final TextEditingController _uriController = TextEditingController();
 
@@ -19,10 +23,31 @@ class _VideoStreamWidgetState extends State<VideoStreamWidget> {
 
     // Initialize the player
     _player = Player();
+    native = _player.platform as NativePlayer;
+    native.setProperty('profile', 'low-latency');
+    _player.platform = native;
 
+    _controller = VideoController(_player,
+        configuration: const VideoControllerConfiguration(
+            width: 600, height: 400, enableHardwareAcceleration: true));
     // Set up the video controller
-    _controller = VideoController(_player);
+    // _controller = VideoController(_player);
+
+
+  if (_player.platform is NativePlayer) {
+    const props = {
+      'profile': 'low-latency',
+      'untimed': '',
+      'no-cache': '',
+      'no-demuxer-thread': '',
+      'vd-lavc-threads': '1'
+    };
+    for (final entry in props.entries) {
+      (_player.platform as NativePlayer).setProperty(entry.key, entry.value);
+    }
+}
   }
+
 
   @override
   void dispose() {
@@ -35,10 +60,12 @@ class _VideoStreamWidgetState extends State<VideoStreamWidget> {
   void _playStream() {
     final uri = _uriController.text.trim();
     if (uri.isNotEmpty) {
-      _player.open(
-        Media(uri),
-        play: true,
-      );
+      native.open(Media(uri));
+
+      // _player.open(
+      //   Media(uri),
+      //   play: true,
+      // );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please enter a valid URI')),

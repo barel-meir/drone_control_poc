@@ -3,8 +3,22 @@
 A proof-of-concept Flutter application for drone control.
 
 ## Project Overview
-This project is a poc for flutter application using map and video
+This project serves as a starting point for building a Flutter application focused on drone control, featuring:
+- A map display (using Leaflet) on the right side.
+- A video stream display (H.265 format) on the left side.
 
+## Screenshot
+Below is a screenshot of the application interface:
+
+![Application Screenshot](![alt text](image.png))
+
+## Getting Started
+If this is your first Flutter project, here are a few resources to help you get started:
+
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For comprehensive Flutter development documentation, visit the [Flutter Documentation](https://docs.flutter.dev/), which includes tutorials, samples, mobile development guidance, and a full API reference.
 
 ## Sample Videos
 You can use the following sample video files or streams for testing:
